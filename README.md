@@ -20,7 +20,7 @@ pip install eldercrank-stripe-core
 ### Using StripeHandler
 
 ```python
-from eldercrank_stripe_core import StripeHandler
+from eldercrank.stripe.core import StripeHandler
 
 handler = StripeHandler(
     api_key="sk_test_...",
@@ -48,7 +48,7 @@ result = handler.create_subscription_product(
 ### Using StripeManager
 
 ```python
-from eldercrank_stripe_core import StripeManager
+from eldercrank.stripe.core import StripeManager
 
 manager = StripeManager(api_key="sk_test_...")
 

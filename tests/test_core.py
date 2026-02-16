@@ -1,7 +1,7 @@
 """Tests for the eldercrank-stripe-core package."""
 
-from eldercrank_stripe_core import StripeHandler, StripeManager
-from eldercrank_stripe_core.models import StripeEvent, ProductModel, PriceModel
+from eldercrank.stripe.core import StripeHandler, StripeManager
+from eldercrank.stripe.core.models import StripeEvent, ProductModel, PriceModel
 
 
 class TestStripeHandler:
