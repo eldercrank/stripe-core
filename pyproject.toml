@@ -1,0 +1,48 @@
+[project]
+name = "eldercrank-stripe-core"
+dynamic = ["version"]
+description = "A no-nonsense Stripe integration by a grumpy dev."
+readme = "README.md"
+authors = [
+    { name = "Shawn", email = "shawn@shawngrover.ca" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "pydantic>=2.12.5",
+    "stripe>=14.3.0",
+]
+license = {text = "MIT"}
+keywords = ["stripe", "payment-processing", "api-wrapper", "webhooks"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+]
+
+[project.urls]
+Homepage = "https://github.com/eldercrank/stripe"
+Repository = "https://github.com/eldercrank/stripe"
+
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/eldercrank_stripe_core"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src"]
+
+[dependency-groups]
+dev = [
+    "hatch-vcs>=0.5.0",
+    "pre-commit>=4.5.1",
+    "pytest>=9.0.2",
+    "ruff>=0.15.1",
+]
