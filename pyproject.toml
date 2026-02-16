@@ -6,13 +6,23 @@ readme = "README.md"
 authors = [
     { name = "Shawn", email = "shawn@shawngrover.ca" }
 ]
+maintainers = [
+    { name = "Shawn", email = "shawn@shawngrover.ca" }
+]
 requires-python = ">=3.13"
 dependencies = [
     "pydantic>=2.12.5",
     "stripe>=14.3.0",
 ]
 license = {text = "MIT"}
-keywords = ["stripe", "payment-processing", "api-wrapper", "webhooks"]
+keywords = [
+    "stripe",
+    "payment-processing",
+    "api-wrapper",
+    "webhooks",
+    "fastapi",
+    "flask",
+]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -20,11 +30,18 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.13",
+    "Typing :: Typed",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+    "Topic :: Office/Business :: Financial",
 ]
 
 [project.urls]
-Homepage = "https://github.com/eldercrank/stripe"
-Repository = "https://github.com/eldercrank/stripe"
+Homepage = "https://github.com/eldercrank/eldercrank-stripe-core"
+Documentation = "https://github.com/eldercrank/eldercrank-stripe-core#readme"
+Repository = "https://github.com/eldercrank/eldercrank-stripe-core.git"
+Changelog = "https://github.com/eldercrank/eldercrank-stripe-core/releases"
+Issues = "https://github.com/eldercrank/eldercrank-stripe-core/issues"
 
 [build-system]
 requires = ["hatchling", "hatch-vcs"]
@@ -37,7 +54,7 @@ source = "vcs"
 packages = ["src/eldercrank_stripe_core"]
 
 [tool.hatch.build.targets.sdist]
-include = ["src"]
+include = ["src", "LICENSE", "README.md", "CONTRIBUTING.md", "SECURITY.md"]
 
 [dependency-groups]
 dev = [
