@@ -583,3 +583,141 @@ class StripeManager:
         except stripe.error.StripeError as e:
             self.logger.error(f"Error listing subscriptions: {str(e)}")
             raise e
+
+    # CHECKOUT SESSION OPERATIONS
+
+    def create_checkout_session(
+        self,
+        customer_id: str,
+        line_items: List[Dict[str, Any]],
+        success_url: str,
+        cancel_url: str,
+        mode: str = "subscription",
+        metadata: Optional[Dict[str, str]] = None,
+        billing_address_collection: Optional[str] = None,
+        payment_method_types: Optional[List[str]] = None,
+        allow_promotion_codes: bool = False,
+        expires_at: Optional[int] = None,
+    ) -> Dict[str, Any]:
+        """
+        Create a Stripe Checkout session.
+
+        Args:
+            customer_id: The ID of the customer.
+            line_items: List of line items (each with 'price' and 'quantity').
+            success_url: URL to redirect after successful checkout.
+            cancel_url: URL to redirect after cancelled checkout.
+            mode: Payment mode ('subscription', 'payment', or 'setup').
+            metadata: Optional metadata for the session.
+            billing_address_collection: Whether to collect billing address.
+            payment_method_types: List of payment method types to accept.
+            allow_promotion_codes: Whether to allow promotion codes.
+            expires_at: Unix timestamp when the session expires.
+
+        Returns:
+            Dictionary with checkout session details including 'url' and 'id'.
+        """
+        try:
+            session_data = {
+                "customer": customer_id,
+                "mode": mode,
+                "line_items": line_items,
+                "success_url": success_url,
+                "cancel_url": cancel_url,
+                "allow_promotion_codes": allow_promotion_codes,
+            }
+
+            if metadata:
+                session_data["metadata"] = metadata
+            if billing_address_collection:
+                session_data["billing_address_collection"] = billing_address_collection
+            if payment_method_types:
+                session_data["payment_method_types"] = payment_method_types
+            if expires_at:
+                session_data["expires_at"] = expires_at
+
+            session = stripe.checkout.Session.create(**session_data)
+            self.logger.info(f"Created checkout session: {session.id}")
+            return {
+                "id": session.id,
+                "url": session.url,
+                "customer_id": session.customer,
+                "mode": session.mode,
+                "status": session.status,
+                "expires_at": session.expires_at,
+                "created": session.created,
+            }
+        except stripe.error.StripeError as e:
+            self.logger.error(f"Error creating checkout session: {str(e)}")
+            raise e
+
+    def retrieve_checkout_session(self, session_id: str) -> Dict[str, Any]:
+        """
+        Retrieve a checkout session by ID.
+
+        Args:
+            session_id: The checkout session ID.
+
+        Returns:
+            Dictionary with checkout session details.
+        """
+        try:
+            session = stripe.checkout.Session.retrieve(session_id)
+            return {
+                "id": session.id,
+                "url": session.url,
+                "customer_id": session.customer,
+                "mode": session.mode,
+                "status": session.status,
+                "expires_at": session.expires_at,
+                "created": session.created,
+            }
+        except stripe.error.StripeError as e:
+            self.logger.error(
+                f"Error retrieving checkout session {session_id}: {str(e)}"
+            )
+            raise e
+
+    # BILLING PORTAL OPERATIONS
+
+    def create_billing_portal_session(
+        self,
+        customer_id: str,
+        return_url: Optional[str] = None,
+        flow_data: Optional[Dict[str, Any]] = None,
+        flow_type: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """
+        Create a Stripe Billing Portal session for customer management.
+
+        Args:
+            customer_id: The ID of the customer.
+            return_url: URL to redirect after portal session ends.
+            flow_data: Optional flow data for pre-configured flows.
+            flow_type: Optional flow type (e.g., 'subscription_update').
+
+        Returns:
+            Dictionary with portal session details including 'url'.
+        """
+        try:
+            portal_data = {"customer": customer_id}
+
+            if return_url:
+                portal_data["return_url"] = return_url
+            if flow_data:
+                portal_data["flow_data"] = flow_data
+            if flow_type:
+                portal_data["flow_type"] = flow_type
+
+            session = stripe.billing_portal.Session.create(**portal_data)
+            self.logger.info(f"Created billing portal session: {session.id}")
+            return {
+                "id": session.id,
+                "url": session.url,
+                "customer_id": session.customer,
+                "created": session.created,
+                "expires_at": session.expires_at,
+            }
+        except stripe.error.StripeError as e:
+            self.logger.error(f"Error creating billing portal session: {str(e)}")
+            raise e
