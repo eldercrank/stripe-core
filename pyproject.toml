@@ -37,11 +37,11 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/eldercrank/eldercrank-stripe-core"
-Documentation = "https://github.com/eldercrank/eldercrank-stripe-core#readme"
-Repository = "https://github.com/eldercrank/eldercrank-stripe-core.git"
-Changelog = "https://github.com/eldercrank/eldercrank-stripe-core/releases"
-Issues = "https://github.com/eldercrank/eldercrank-stripe-core/issues"
+Homepage = "https://github.com/eldercrank/stripe-core"
+Documentation = "https://github.com/eldercrank/stripe-core#readme"
+Repository = "https://github.com/eldercrank/stripe-core.git"
+Changelog = "https://github.com/eldercrank/stripe-core/releases"
+Issues = "https://github.com/eldercrank/stripe-core/issues"
 
 [build-system]
 requires = ["hatchling", "hatch-vcs"]
